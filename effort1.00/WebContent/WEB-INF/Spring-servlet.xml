@@ -1,0 +1,43 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="
+   http://www.springframework.org/schema/beans     
+   http://www.springframework.org/schema/beans/spring-beans.xsd
+   http://www.springframework.org/schema/context 
+   http://www.springframework.org/schema/context/spring-context.xsd
+   http://www.springframework.org/schema/mvc
+   http://www.springframework.org/schema/mvc/spring-mvc.xsd
+   http://www.springframework.org/schema/security
+   http://www.springframework.org/schema/security/spring-security.xsd">
+
+	<context:component-scan base-package="com.web" />
+
+	<!-- NOTE: global method security tag must be present after component scan 
+		tag otherwise it will not work. also note that to include this tag in spring0-servlet.xml 
+		file first include security schema in this file -->
+	<security:global-method-security
+		secured-annotations="enabled" pre-post-annotations="enabled" />
+
+
+	<mvc:annotation-driven />
+	<!-- <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource"> 
+		<property name="basenames"> <list> <value>mymessages</value> </list> </property> 
+		</bean> -->
+	<mvc:resources mapping="/extResources/**" location="/extResources/" />
+	<mvc:resources mapping="/appResources/**" location="/appResources/" />
+	<mvc:resources mapping="/pages/**" location="/pages/" />
+	<mvc:default-servlet-handler />
+	<mvc:annotation-driven />
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix">
+			<value>/pages/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+
+</beans>
